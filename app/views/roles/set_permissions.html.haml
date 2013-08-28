@@ -1,0 +1,6 @@
+%h1= @role.name
+.permissions-list
+  = simple_form_for @role do |f|
+    = f.association :permissions, as: :check_boxes
+    = f.button :submit
+        

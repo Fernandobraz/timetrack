@@ -7,6 +7,9 @@ gem 'rails', '4.0.0'
 
 gem 'mysql2'
 gem 'devise', '3.0.0.rc'
+gem 'cancan'
+gem 'haml'
+gem 'simple_form'
 
 
 # Gems used only for assets and not required

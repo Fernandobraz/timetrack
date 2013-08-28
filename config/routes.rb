@@ -1,8 +1,19 @@
 Timetrack::Application.routes.draw do
+  resources :permissions
+  resources :roles
+  get   "roles_permissions/:id" => "roles#set_permissions", as: "set_permissions"
+  patch "/roles/:id" => "roles#update_permissions"
+  put   "/roles/:id" => "roles#update_permissions"
   resources :projects
 
 
-  devise_for :users, :controllers => {:registrations =>"users/registrations", :passwords => "users/passwords"}
+  devise_for :users, :controllers => {:registrations =>"users/registrations", :passwords => "users/passwords", :users => "/users"}
+  devise_scope :user do
+    get   "/users" => "users#index", as: "users"
+    get   "/users/edit/:id" => "users#edit", as: "edit_user"
+    patch "/users/:id" => "users#update"
+    put   "/users/:id" => "users#update"
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

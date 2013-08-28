@@ -1,0 +1,8 @@
+%h2
+  Edit #{resource_name.to_s.humanize}
+= simple_form_for @user, url: url_for(:action => 'update', :controller => 'users') do |f|
+  = devise_error_messages!
+  = @user.email
+  = f.input :role_id, collection: Role.all
+  = f.submit "Update"
+= link_to "Back", :back
