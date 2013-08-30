@@ -1,0 +1,15 @@
+%h1 Editing project
+= simple_form_for(@project, :url => client_project_path(@client, @project)) do |f|
+  - if @project.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@project.errors.count, "error")
+        prohibited this project from being saved:
+      %ul
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.input :name
+  .actions
+    = f.button :submit
+\#{link_to 'Back', client_projects_path}

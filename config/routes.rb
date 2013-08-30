@@ -1,10 +1,18 @@
 Timetrack::Application.routes.draw do
+
+
+  resources :clients do
+    resources :projects do
+      resources :timesheets
+    end
+  end
+
   resources :permissions
   resources :roles
   get   "roles_permissions/:id" => "roles#set_permissions", as: "set_permissions"
   patch "/roles/:id" => "roles#update_permissions"
   put   "/roles/:id" => "roles#update_permissions"
-  resources :projects
+  
 
 
   devise_for :users, :controllers => {:registrations =>"users/registrations", :passwords => "users/passwords", :users => "/users"}
@@ -13,6 +21,8 @@ Timetrack::Application.routes.draw do
     get   "/users/edit/:id" => "users#edit", as: "edit_user"
     patch "/users/:id" => "users#update"
     put   "/users/:id" => "users#update"
+    get   "/users/new" => "users#new", as: "new_user"
+    post  "/users/create" => "users#create"
   end
 
   # The priority is based upon order of creation:
@@ -64,7 +74,7 @@ Timetrack::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'projects#index'
+  root :to => 'dashboard#index'
 
   # See how all your routes lay out with "rake routes"
 

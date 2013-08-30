@@ -1,0 +1,18 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @client.name
+%p
+  %strong Recruiter:
+  = User.find(@client.recruiter_id).name
+  
+= link_to 'Projects', client_projects_path(@client)
+|
+\#{link_to 'New Project', new_client_project_path(@client)}
+%br
+%br
+%br
+
+= link_to 'Edit', edit_client_path(@client)
+|
+\#{link_to 'Back', clients_path}

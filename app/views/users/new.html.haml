@@ -1,0 +1,14 @@
+%h2
+  New #{resource_name.to_s.humanize}
+= simple_form_for @user, url: url_for(:action => 'create', :controller => 'users'), method: 'post' do |f|
+  = devise_error_messages!
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :email
+  = f.input :office
+  = f.input :address
+  = f.input :tel
+  = f.input :mobile
+  = f.input :role_id, collection: Role.all
+  = f.button :submit
+= link_to "Back", :back

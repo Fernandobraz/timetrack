@@ -1,0 +1,16 @@
+%p#notice= notice
+%p
+  %strong Project:
+  = @timesheet.project_id
+%p
+  %strong User:
+  = @timesheet.user_id
+%p
+  %strong Day:
+  = @timesheet.day
+%p
+  %strong Worked hours:
+  = @timesheet.worked_hours
+= link_to 'Edit', edit_timesheet_path(@timesheet)
+|
+\#{link_to 'Back', timesheets_path}

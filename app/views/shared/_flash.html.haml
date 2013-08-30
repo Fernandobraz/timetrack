@@ -1,0 +1,11 @@
+- if flash[:notice].present?
+  .alert.alert-info#notice-flash
+    %button{:type => "button", :class => "close", :"data-dismiss" => "alert", :onclick => "document.getElementById('notice-flash').style.display='none'"}
+      ="&times;".html_safe
+    = flash[:notice]
+      
+- if flash[:alert].present? && flash[:alert] != 'You need to sign in or sign up before continuing.'
+  .alert#alert-flash
+    %button{:type => "button", :class => "close", :"data-dismiss" => "alert", :onclick => "document.getElementById('alert-flash').style.display='none'"}
+      ="&times;".html_safe
+    = flash[:alert]

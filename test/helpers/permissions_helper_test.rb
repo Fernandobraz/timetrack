@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class PermissionsHelperTest < ActionView::TestCase
+class permissionsHelperTest < ActionView::TestCase
 end

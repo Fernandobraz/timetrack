@@ -1,10 +1,10 @@
 class ProjectsController < ApplicationController
-  before_filter :authenticate_user!
+  respond_to :html, :xml, :json
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
-
+    @client = Client.find(params[:client_id])
+    @projects = Project.where(client_id: @client.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }
@@ -25,31 +25,31 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.json
   def new
-    @project = Project.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @project }
-    end
+    @client = Client.find(params[:client_id])
+    @project = @client.projects.build
+    
+    respond_with(@project)
   end
 
   # GET /projects/1/edit
   def edit
+    @client = Client.find(params[:client_id])
     @project = Project.find(params[:id])
   end
 
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params)
+    @client = Client.find(params[:client_id])
+    @project = @client.projects.build(project_params)
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render json: @project, status: :created, location: @project }
+        format.html { redirect_to client_projects_path(@client), notice: 'Project was successfully created.' }
+        format.json { render json: client_projects_path(@client), status: :created, location: @project }
       else
         format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.json { render json: client_projects_path(@client).errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,15 +57,16 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.json
   def update
+    @client = Client.find(params[:client_id])
     @project = Project.find(params[:id])
-
+    
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.html { redirect_to client_projects_path(@client), notice: 'Project was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.json { render json: client_projects_path(@client).errors, status: :unprocessable_entity }
       end
     end
   end

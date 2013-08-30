@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  project_id: 1
+  user_id: 1
+  day: 2013-08-30
+  worked_hours: 1.5
+
+two:
+  project_id: 1
+  user_id: 1
+  day: 2013-08-30
+  worked_hours: 1.5

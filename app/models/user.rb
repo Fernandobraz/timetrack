@@ -7,5 +7,15 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   
   belongs_to :roles
+  has_and_belongs_to_many :clients
+  has_many :timesheets
+  
+  def name
+    name = self.first_name.first.upcase + "." + self.last_name.capitalize
+  end
+  
+  def role
+    role = Role.find(self.role_id).name
+  end
   
 end

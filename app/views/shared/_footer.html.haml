@@ -1,0 +1,17 @@
+.footer
+  %ul.footer-links
+    %li=link_to "Home", root_path
+    %li.muted="&bull;".html_safe
+    %li=link_to "Clients", clients_path
+    %li.muted="&bull;".html_safe
+    %li=link_to "Roles", roles_path
+    %li.muted="&bull;".html_safe
+    %li=link_to "Users", users_path
+    %li.muted="&bull;".html_safe
+    - if user_signed_in?
+      %li= link_to "Edit Profile", edit_user_registration_path
+      %li.muted="&bull;".html_safe
+      %li= link_to "Logout", destroy_session_path(current_user), method: :delete
+    - else
+      %li= link_to "Login", main_app.new_user_session_path
+

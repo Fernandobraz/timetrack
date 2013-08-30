@@ -1,0 +1,17 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @project.name
+%p
+  %b Client:
+  = Client.find(@project.client_id).name
+  
+= link_to 'Time Sheets', client_project_timesheets_path(@project.client_id, @project.id)
+|
+\#{link_to 'New Time Sheet', new_client_project_timesheet_path(@project.client_id, @project.id)}
+%br
+%br
+%br
+= link_to 'Edit', edit_client_project_path(@project.client_id, @project.id)
+|
+\#{link_to 'Back', client_projects_path(@project.client_id)}

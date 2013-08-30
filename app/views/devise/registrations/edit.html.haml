@@ -3,6 +3,26 @@
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
   = devise_error_messages!
   %div
+    = f.label :first_name
+    %br/
+    = f.text_field :first_name, :autofocus => true
+  %div
+    = f.label :last_name
+    %br/
+    = f.text_field :last_name
+  %div
+    = f.label :office
+    %br/
+    = f.text_field :office
+  %div
+    = f.label :tel
+    %br/
+    = f.text_field :tel
+  %div
+    = f.label :mobile
+    %br/
+    = f.text_field :mobile
+  %div
     = f.label :email
     %br/
     = f.email_field :email, :autofocus => true
@@ -23,5 +43,13 @@
     %i= "(we need your current password to confirm your changes)"
     %br
     = f.password_field :current_password
+    
+  %div
+    = f.check_box :alert_submited_on_time
+    = f.label "Do you want to receive an email when the time sheet was submited on time?"
+  %div
+    = f.check_box :alert_awaiting_approval  
+    = f.label "Do you want to receive an email when the time sheet is waiting your approval?"
+  %br
   %div= f.submit "Update"
 = link_to "Back", :back

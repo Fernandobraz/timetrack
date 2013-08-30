@@ -6,6 +6,14 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.string :address
       t.integer :role_id
+      t.string :office
+      t.string :tel
+      t.string :mobile
+      t.string :busines_name
+      t.string :position
+      t.column :alert_submited_on_time, :boolean
+      t.column :alert_awaiting_approval, :boolean
+
       
       ## Database authenticatable
       t.string :email,              :null => false, :default => ""

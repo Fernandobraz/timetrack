@@ -1,0 +1,9 @@
+= simple_form_for(@timesheet, :url => client_project_timesheet_path(@project.client_id, @project.id, @timesheet.id)) do |f|
+  = f.error_notification
+  .inputs
+    = f.input :user_id, as: :hidden, :input_html =>{ value: current_user.id}
+    = f.input :project_id, as: :hidden, :input_html => {value: @project.id}
+    = f.input :day
+    = f.input :worked_hours
+  .actions
+    = f.button :submit
