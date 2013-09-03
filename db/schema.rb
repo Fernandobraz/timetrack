@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130830142444) do
+ActiveRecord::Schema.define(version: 20130903082217) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -47,8 +47,26 @@ ActiveRecord::Schema.define(version: 20130830142444) do
     t.datetime "updated_at"
   end
 
+  create_table "projects_users", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.string   "comment"
+    t.date     "date"
+    t.time     "time"
+    t.float    "worked_hours"
+    t.integer  "timesheet_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -56,10 +74,11 @@ ActiveRecord::Schema.define(version: 20130830142444) do
   create_table "timesheets", force: true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
-    t.date     "day"
-    t.float    "worked_hours"
+    t.date     "start_date"
+    t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "submited?",  default: false, null: false
   end
 
   create_table "users", force: true do |t|

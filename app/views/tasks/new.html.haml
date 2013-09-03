@@ -1,0 +1,12 @@
+%h1 New task
+= simple_form_for(@task, :url => client_project_timesheet_task_path(@project.client_id, @project.id, @timesheet.id, @task.id)) do |f|
+  = f.error_notification
+  .inputs
+    = f.input :name
+    = f.input :comment
+    = f.input :date
+    = f.input :time
+    = f.input :worked_hours
+  .actions
+    = f.button :submit
+= link_to 'Back', client_project_timesheet_tasks_path

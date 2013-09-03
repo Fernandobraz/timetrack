@@ -1,7 +1,7 @@
 class UsersController < Devise::RegistrationsController
   skip_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   def index
-    @users = User.all
+    @users = User.all.sort {|a,b| a.email <=> b.email }
   end
   
   def new
@@ -44,7 +44,7 @@ class UsersController < Devise::RegistrationsController
   private
   
   def user_params
-    params.require(:user).permit(:email, :office, :address, :tel, :mobile, :business_name, :position, :alert_submited_on_time, :alert_awaiting_approval, :type, :role_id)
+    params.require(:user).permit(:email, :first_name, :last_name, :office, :address, :tel, :mobile, :business_name, :position, :alert_submited_on_time, :alert_awaiting_approval, :type, :role_id)
   end
 
 

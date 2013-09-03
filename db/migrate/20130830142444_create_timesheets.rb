@@ -3,8 +3,8 @@ class CreateTimesheets < ActiveRecord::Migration
     create_table :timesheets do |t|
       t.integer :project_id
       t.integer :user_id
-      t.date :day
-      t.float :worked_hours
+      t.date  :start_date
+      t.date  :end_date
 
       t.timestamps
     end

@@ -2,19 +2,34 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-        if user.role? :super_admin
+    if user.nil?
+      user = User.new
+    end
+    
+    if user.role == "Super Admin"
        can :manage, :all
-    elsif user.role? :product_admin
-      can :manage, [Product, Asset, Issue]
-    elsif user.role? :product_team
-      can :read, [Product, Asset]
+    elsif user.role == "Recruitment Company Manager"
+      can :manage, [User, Client, Project, Timesheet]
+    elsif user.role == "Recruitment Company Administrator"
+      can :manage, [User, Client, Project, Timesheet]
+    elsif user.role == "Recruitment Company Accountancy"
+      can :manage, [User, Client, Project, Timesheet]
+    elsif user.role == "Recruitment Company Recruiter"
       # manage products, assets he owns
-      can :manage, Product do |product|
-        product.try(:owner) == user
-      end
-      can :manage, Asset do |asset|
-        asset.assetable.try(:owner) == user
-      end
+      can :read, Client.users.include?(user)
+    elsif user.role == "Client"
+      can :manage, [User, Client, Project, Timesheet]
+    elsif user.role == "Authoriser"
+      can :manage, [User, Client, Project, Timesheet]
+    elsif user.role == "Consultant"
+      can :manage, [User, Client, Project, Timesheet]
     end
   end
+  
+  private
+  
+    def permission?(permission)
+      return !!self.permissions.find_by_name(permission.to_s.camelize)
+    end
+
 end

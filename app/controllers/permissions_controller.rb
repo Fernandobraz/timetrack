@@ -24,7 +24,7 @@ class PermissionsController < ApplicationController
     @permission = Permission.new(permission_params)
 
     if @permission.save
-      redirect_to @permission, notice: 'permission was successfully created.'
+      redirect_to permissions_path, notice: 'permission was successfully created.'
     else
       render action: 'new'
     end

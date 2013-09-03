@@ -2,20 +2,18 @@
 %table
   %thead
     %tr
-      %th Project
       %th User
-      %th Day
-      %th Worked hours
+      %th Start
+      %th End
       %th
       %th
       %th
   %tbody
     - @timesheets.each do |timesheet|
       %tr
-        %td= Project.find(timesheet.project_id).name
         %td= User.find(timesheet.user_id).name
-        %td= timesheet.day
-        %td= timesheet.worked_hours
+        %td= timesheet.start_date
+        %td= timesheet.end_date
         %td= link_to 'Show', client_project_timesheet_path(@project.client_id, @project.id, timesheet)
         %td= link_to 'Edit', edit_client_project_timesheet_path(@project.client_id, @project.id, timesheet)
         %td= link_to 'Destroy', client_project_timesheet_path(@project.client_id, @project.id, timesheet), method: :delete, data: { confirm: 'Are you sure?' }

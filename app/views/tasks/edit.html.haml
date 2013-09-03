@@ -1,0 +1,10 @@
+%h1 Editing task
+= simple_form_for(@task) do |f|
+  = f.error_notification
+  .inputs
+    = f.input :name
+  .actions
+    = f.button :submit
+= link_to 'Show', @task
+|
+\#{link_to 'Back', tasks_path}

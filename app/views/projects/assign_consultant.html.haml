@@ -1,0 +1,5 @@
+%h1= @project.name
+.user-list
+  = simple_form_for @project, :url => client_project_path(@project.client, @project) do |f|
+    = f.association :users, collection: @consultants, label_method: :email, value_method: :id, label: "Consultants: ", as: :check_boxes
+    = f.button :submit

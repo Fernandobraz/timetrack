@@ -4,10 +4,29 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @client = Client.find(params[:client_id])
-    @projects = Project.where(client_id: @client.id)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @projects }
+    @can_see_all = ["Super Admin", "Recruitment Company Manager", "Recruirment Company Administrator"]
+    if @can_see_all.include?(current_user.role)
+      @projects = Project.where(client_id: @client.id)
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @projects }
+      end
+    else
+      if current_user.clients.include?(@client)
+        @projects = Project.where(client_id: @client.id)
+        respond_to do |format|
+          format.html # index.html.erb
+          format.json { render json: @projects }
+        end
+      elsif current_user.can_access?(@client)
+        @projects = current_user.projects.where(client_id: @client.id)
+        respond_to do |format|
+          format.html # index.html.erb
+          format.json { render json: @projects }
+        end
+      else
+        redirect_to root_path, notice: "You don't have permission to see that."
+      end
     end
   end
 
@@ -83,10 +102,15 @@ class ProjectsController < ApplicationController
     end
   end
   
+  def assign_consultant
+    @project = Project.find(params[:id])
+    @consultants = User.where(role_id: Role.find_by_name("Consultant"))
+  end
+  
   private
   
   def project_params
-    params.require(:project).permit(:client_id, :name)
+    params.require(:project).permit(:client_id, :name, :user_ids => [])
   end
   
 end

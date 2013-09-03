@@ -1,16 +1,31 @@
-%p#notice= notice
-%p
-  %strong Project:
-  = @timesheet.project_id
-%p
-  %strong User:
-  = @timesheet.user_id
-%p
-  %strong Day:
-  = @timesheet.day
-%p
-  %strong Worked hours:
-  = @timesheet.worked_hours
-= link_to 'Edit', edit_timesheet_path(@timesheet)
-|
-\#{link_to 'Back', timesheets_path}
+%h1= "#{@timesheet.user.name}'s Timesheet" 
+=link_to "new task", new_client_project_timesheet_task_path(@client, @project, @timesheet)
+%table{:border => "1"}
+  %tr
+    %td Tasks
+    - @timesheet.working_days.each do |t|
+      %td= name_week_day(t.wday)
+  - if !@tasks.nil?
+    - @tasks.each do |task|
+      %tr
+        %td= task.name
+        %td= task.date.wday == @timesheet.start_date.wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 1).wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 2).wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 3).wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 4).wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 5).wday ? task.worked_hours : ""
+        %td= task.date.wday == (@timesheet.start_date + 6).wday ? task.worked_hours : ""
+  %tr
+    %td Total
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+1)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+2)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+3)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+4)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+5)
+    %td= @timesheet.working_hours_sum_of(@timesheet.start_date+6)
+    
+
+    
+    

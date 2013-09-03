@@ -1,9 +1,12 @@
 Timetrack::Application.routes.draw do
 
 
+
   resources :clients do
     resources :projects do
-      resources :timesheets
+      resources :timesheets do
+        resources :tasks
+      end
     end
   end
 
@@ -13,7 +16,9 @@ Timetrack::Application.routes.draw do
   patch "/roles/:id" => "roles#update_permissions"
   put   "/roles/:id" => "roles#update_permissions"
   
-
+  get "client_users/:id" => "clients#setup_client", as: "setup_client"
+  
+  get "consultants_project/:id" => "projects#assign_consultant", as: "assign_consultant"
 
   devise_for :users, :controllers => {:registrations =>"users/registrations", :passwords => "users/passwords", :users => "/users"}
   devise_scope :user do

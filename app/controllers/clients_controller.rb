@@ -1,9 +1,25 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_client, only: [:show, :edit, :update, :destroy, :setup_client]
+  # before_filter :check_permissions, :only => [:new, :create, :cancel]
+  # skip_before_filter :require_no_authentication
 
+  # def check_permissions
+  #   authorize! :create, resource
+  # end
+  
   # GET /clients
   def index
-    @clients = Client.all
+    @can_see_all = ["Super Admin", "Recruitment Company Manager", "Recruirment Company Administrator"]
+    if @can_see_all.include?(current_user.role)
+      @clients = Client.all
+    elsif current_user.role == "Consultant"
+      @clients = []
+      current_user.projects.each do |p|
+        @clients << p.client if !@clients.include?(p.client)
+      end
+    else
+      @clients = current_user.clients
+    end
   end
 
   # GET /clients/1
@@ -43,6 +59,12 @@ class ClientsController < ApplicationController
   def destroy
     @client.destroy
     redirect_to clients_url, notice: 'Client was successfully destroyed.'
+  end
+  
+  def setup_client
+    @recruiters = User.where(role_id: Role.where(name: "Recruitment Company Recruiter"))
+    @user_clients = User.where(role_id: Role.where(name: "Client"))
+    @authorisers = User.where(role_id: Role.where(name: "Authoriser"))
   end
 
   private

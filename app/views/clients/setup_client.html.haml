@@ -1,0 +1,11 @@
+%h1= "Seting up #{@client.name}"
+.client-list
+  %p Set the Recruiter
+  = simple_form_for @client do |f|
+    = f.association :users, collection: @recruiters, label_method: :email, value_method: :id, prompt: "Select a recruiter..", label: "Recruiter: "
+    %br
+    = f.association :users, collection: @user_clients, label_method: :email, value_method: :id, prompt: "Select a admin..", label: "Admins: ", as: :check_boxes
+    %br
+    = f.association :users, collection: @authorisers, label_method: :email, value_method: :id, prompt: "Select a authoriser..", label: "Authorisers: ", as: :check_boxes
+    %br
+    = f.button :submit

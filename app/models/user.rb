@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   
   belongs_to :roles
   has_and_belongs_to_many :clients
+  has_and_belongs_to_many :projects
   has_many :timesheets
   
   def name
@@ -18,4 +19,17 @@ class User < ActiveRecord::Base
     role = Role.find(self.role_id).name
   end
   
+  # def has_timesheet_on?(project)
+  #   Timesheet.where()
+  # end
+  def can_access?(client)
+    return false if client.projects.empty?
+    client.projects.each do |p|
+      if self.projects.include?(p)
+        return true
+      else
+        false
+      end
+    end
+  end
 end

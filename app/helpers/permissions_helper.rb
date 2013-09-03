@@ -1,2 +1,2 @@
-module permissionsHelper
+module PermissionsHelper
 end
